@@ -80,13 +80,19 @@ void 	GPIO_output_Init(void){
  	
  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);	 //使能PB端口时钟
 	
- GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;				 //pm25-->PB.1  PB12 端口配置
- GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
- GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;		 //IO口速度为2MHz
- GPIO_Init(GPIOB, &GPIO_InitStructure);	                                    				 //根据设定参数初始化GPIOB.1
- GPIO_ResetBits(GPIOB,GPIO_Pin_12);				 //PB12 输出0
 	
- GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;				 //pm25-->PB.1  PB12 端口配置
+	GPIO_InitStructure.GPIO_Pin  = GPIO_Pin_12;//PB12作为检查是否有充电的信号端口
+	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPD; //设置成上拉输入
+ 	GPIO_Init(GPIOB, &GPIO_InitStructure);//初始化GPIO_PB12
+	
+// GPIO_InitStructure.GPIO_Pin = GPIO_Pin_12;				 //pm25-->PB.1  PB12 端口配置
+// GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
+// GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;		 //IO口速度为2MHz
+// GPIO_Init(GPIOB, &GPIO_InitStructure);	                                    				 //根据设定参数初始化GPIOB.1
+// GPIO_ResetBits(GPIOB,GPIO_Pin_12);				 //PB12 输出0
+	
+ //控制PM25的开启和关闭
+ GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;				 //pm25-->PB.1  PB1 端口配置
  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP; 		 //推挽输出
  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;		 //IO口速度为2MHz
  GPIO_Init(GPIOB, &GPIO_InitStructure);	                                    				 //根据设定参数初始化GPIOB.1
@@ -111,7 +117,8 @@ void hal_board_init(void) {
 	//STMFLASH_Write(FLASH_SAVE_ADDR,(u16*)DEV_MAC_ADDR,4);
 	SHT3X_Init();           //初始化I2C温湿度模块
 	//send_rejest_data();
-	PM25_CON=0;
+	PWER_ON_OFF=1;
+	PM25_CON=1;
 }
 //心跳数据上报
 void send_heart_data(void){
@@ -185,19 +192,19 @@ if(temp==NO_ERROR){
 		//adc_data=adc_temp;
    POW_DATA[0]=0x0A;
 	 POW_DATA[1]=0x00;
-	if(adc_data>=0x060F){
+	if(adc_data>=0x061F){
 		POW_DATA[2]=0x64;
 	}
-	if((adc_data<0x060F)&(adc_data>=0x05D1)){
+	if((adc_data<0x061F)&(adc_data>=0x05D1)){
 		POW_DATA[2]=0x50;
 	}
 	if((adc_data<0x05D1)&(adc_data>=0x056E)){
 		POW_DATA[2]=0x3C;
 	}
-	if((adc_data<0x056E)&(adc_data>=0x0517)){
+	if((adc_data<0x056E)&(adc_data>=0x0510)){
 		POW_DATA[2]=0x28;
 	}
-		if(adc_data<0x0517){
+		if(adc_data<0x0510){
 		POW_DATA[2]=0x0A;
 	}
 
@@ -206,7 +213,7 @@ if(temp==NO_ERROR){
 	mymemcpy(data_up_t.data_core.POW,POW_DATA,3);
 	POW_sta[0]=0x0F;
 	POW_sta[1]=0x00;
-	if(adc_data>0x067F){
+	if(power_charge_temp==1){
 	POW_sta[2]=0x01;//充电状态
 	}else{
 		POW_sta[2]=0x00;

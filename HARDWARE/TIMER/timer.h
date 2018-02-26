@@ -15,7 +15,9 @@
 //////////////////////////////////////////////////////////////////////////////////   
 #define PM25_CON   PBout(1)// PB1 
 #define PWER_ON_OFF    PBout(9)// PB9
-//#define POWER_CON  PBout(12)
+
+#define POW_CHARGE  GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_12)//读取PB12的值
+
 
 extern u16 sys_heart_flag;
 extern u16 sys_send_data_flag;
@@ -29,7 +31,10 @@ extern u16 key_short_down;//短按按键标志
 extern u16 key_connect_down;//连按按键标志
 extern u16 doubleclick;//连按事件次数
 extern u16 com_count;
+extern u16 power_charge_temp;//充电状态标志
+
 
 extern u16 RECEVE_HEART;
 void key_count_process(void);
+void power_charge(void);
 #endif

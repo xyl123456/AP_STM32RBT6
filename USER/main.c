@@ -40,7 +40,6 @@
 	{
 		event_key_handle();
 		uart_receve_handle();
-
 	}	 
  }
 

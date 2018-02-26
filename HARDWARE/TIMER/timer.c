@@ -37,6 +37,8 @@ u16 keyUpFlag=0;//按键抬起标志
 u16 doubleclick=0;//连按事件
 u16 com_count=0;
 
+u16 power_charge_temp=0;//充电状态标志
+
 u16 heart_count=0;
 u16 heart_data_count=0;
 
@@ -128,6 +130,19 @@ void key_count_process(void){
 	}
 	
 }
+
+//用于检测是否处于充电状态
+void power_charge(void)
+{
+	if(POW_CHARGE==0)
+	{
+		//没有充电
+		power_charge_temp=0;
+	}else {
+		//处于充电状态
+		power_charge_temp=1;
+	}
+}
 //定时器3中断服务程序
 void TIM3_IRQHandler(void)   //TIM3中断
 {
@@ -170,6 +185,8 @@ void TIM3_IRQHandler(void)   //TIM3中断
 			
 			//按键长短按事件
 			key_count_process();
+			//检测是否充电
+			power_charge();
 			
 			TIM_ClearITPendingBit(TIM3, TIM_IT_Update);  //清除TIMx更新中断标志 
 		}
