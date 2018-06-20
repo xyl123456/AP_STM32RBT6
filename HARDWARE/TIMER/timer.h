@@ -13,14 +13,20 @@
 //Copyright(C) 广州市星翼电子科技有限公司 2009-2019
 //All rights reserved									  
 //////////////////////////////////////////////////////////////////////////////////   
-#define PM25_CON   PBout(1)// PB1 
-#define PWER_ON_OFF    PBout(9)// PB9
+#define PM25_CON   PBout(1)// PB1
+#define WIFI_CONFIG   PBout(9) //pb9
 
-#define POW_CHARGE  GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_12)//读取PB12的值
+#define WIFI_STATE   GPIO_ReadInputDataBit(GPIOA,GPIO_Pin_5) //读取PA5的值
+//#define WIFI_STATE   PAin(5)
+
+//#define PWER_ON_OFF    PBout(9)// PB9
+
+//#define POW_CHARGE  GPIO_ReadInputDataBit(GPIOB,GPIO_Pin_12)//读取PB12的值
 
 
 extern u16 sys_heart_flag;
 extern u16 sys_send_data_flag;
+extern u16 sys_wifi_state_flag;//wifi状态标志位
 
 extern void TIM3_Int_Init(u16 arr,u16 psc);
 extern u8 key_fall_flag;

@@ -53,7 +53,7 @@ void EXTI9_5_IRQHandler(void)
 {
 
 	if(KEY0==0){
-		key_fall_flag=1;
+		//key_fall_flag=1;
 	}
 	
 	EXTI_ClearITPendingBit(EXTI_Line8); //清除LINE0上的中断标志位  

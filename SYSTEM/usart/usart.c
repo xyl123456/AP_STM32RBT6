@@ -184,7 +184,7 @@ void USART1_IRQHandler(void)                	//串口1中断服务程序
 			USART_RX_STA|=0x8000;
 		}
 			USART_RX_BUF[USART_RX_STA&0X3FFF]=Res;
-			USART_RX_STA++;	 
+			USART_RX_STA++;	
 		}
 		USART_ClearITPendingBit(USART1, USART_IT_RXNE);
 	}

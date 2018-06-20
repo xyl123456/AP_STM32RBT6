@@ -26,7 +26,7 @@
 //4,修改了EN_USART1_RX的使能方式
 //V1.5修改说明
 //1,增加了对UCOSII的支持
-#define USART_REC_LEN  			200  	//定义最大接收字节数 200
+#define USART_REC_LEN  			256  	//定义最大接收字节数 256
 #define EN_USART1_RX 			1		//使能（1）/禁止（0）串口1接收
 
 #define HAL_UART1     1

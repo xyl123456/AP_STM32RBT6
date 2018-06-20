@@ -3,11 +3,11 @@
 
 #include "sys.h"
 
-
 #define HAL_REJEST_LENGTH  					22
 #define HAL_HEART_LENGTH   					13
-#define HAL_DATAUP_LENGTH           31
+#define HAL_DATAUP_LENGTH           25
 #define HAL_MODIFY_LENGTH           13
+#define HAL_WIF_CONFIG_LENGTH       13
 
 
 //身份登记
@@ -65,7 +65,7 @@ typedef union Heart_up
 //设备数据
 typedef union Data_up
 {
-   unsigned char data_buf[31];
+   unsigned char data_buf[25];
    struct data_up_t
    {
        unsigned char Head_byte[2];//0xEB 0x90
@@ -76,8 +76,8 @@ typedef union Data_up
        unsigned char PM03[3];//第一个字节0x0E,后两个是数据，数据为整数
        unsigned char TEM[3];//第一个字节0x03,后两个是数据,数据为1000+数据准换16
        unsigned char HUM[3];//第一个字节0x04,后两个是数据,数据为1000+数据准换16
-			 unsigned char POW[3];//第一个字节0x0A,后两个是数据
-		   unsigned char POW_STA[3];//如果充电则为0X01，不充电为0x00
+			 //unsigned char POW[3];//第一个字节0x0A,后两个是数据
+		   //unsigned char POW_STA[3];//如果充电则为0X01，不充电为0x00
        unsigned char Check_code[2];//校验码，除去包头和包尾所有字节的累加和
        unsigned char Tial[2];//0x0D 0x0A
    }data_core;
@@ -170,8 +170,9 @@ typedef struct SHT30_DATA_STAUCT
 }SHT30_DATA_STRUCT;
 
 
-void send_rejest_data(void);
+
 uint16_t  Sum_data(unsigned char buf[],int start,int stop);
+void send_rejest_data(void);
 void send_serial_data(void);
 void send_heart_data(void);
 void 	GPIO_output_Init(void);
@@ -186,5 +187,5 @@ extern void uart_receve_handle(void);
 extern void hold_power_handle(void);//处理按键供电问题
 extern void event_key_handle(void);
 extern void hal_board_init(void);
-extern void event_task_handle(void);		    
+extern void event_task_handle(void);
 #endif

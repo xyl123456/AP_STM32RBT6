@@ -25,9 +25,12 @@
 
 #define SEND_SERIAL_DATA  3000   //定义30S周期上报数据,
 #define HEART_SERIAL_DATA  4000   //定义40S心跳事件
+#define WIFI_CHECK_DATA   100     //定义1s检测事件
 
 #define SEND_SERIAL_EVENT      			0x0001 //定义周期上报数据事件
 #define HEART_SERIAL_EVENT     			0x0002  //定义心跳事件
+
+
 
 																	    
 	 
