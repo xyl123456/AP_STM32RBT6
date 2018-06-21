@@ -81,7 +81,7 @@ void TIM3_IRQHandler(void)   //TIM3ÖÐ¶Ï
 			if(time3_wifi_cnt==WIFI_CHECK_DATA){
 				time3_wifi_cnt=0;		
 				if(WIFI_STATE==0){
-					sys_wifi_state_flag=1;
+					//sys_wifi_state_flag=1;
 				}else
 				{
 					sys_wifi_state_flag=0;

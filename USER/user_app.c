@@ -325,7 +325,9 @@ void uart_receve_handle(void)
 				}
 			if(mymemcmp(uart2_commandbuf,(void *)WIFI_CMD,13)==0)
 			{
+				
 				send_rejest_data();//wifi连接注册信息
+				sys_wifi_state_flag=1;
 			}
 			
 			if((uart2_len==HAL_MODIFY_LENGTH)&(uart2_commandbuf[4]==0xFD)){
